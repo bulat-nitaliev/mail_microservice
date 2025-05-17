@@ -1,5 +1,5 @@
 from contextlib import asynccontextmanager
-from utils import make_consumer
+from utils import consume_message
 from fastapi import FastAPI
 from config import Settings
 
@@ -9,7 +9,7 @@ from config import Settings
 async def lifespan(app: FastAPI):
     settings = Settings()
     print(1)
-    await make_consumer(settings=settings)
+    await consume_message()
     yield
   
 
