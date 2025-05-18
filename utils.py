@@ -1,4 +1,3 @@
-
 import json
 from aiokafka import AIOKafkaConsumer, AIOKafkaProducer
 from config import Settings
@@ -7,15 +6,14 @@ from client import MailClient
 
 
 consumer = AIOKafkaConsumer(
-    'email_topic',
+    "email_topic",
     bootstrap_servers="localhost:9092",
-    value_deserializer=lambda message: json.loads(message.decode('utf-8'))
+    value_deserializer=lambda message: json.loads(message.decode("utf-8")),
 )
 
-async def get_mail_service()->MailService:
-    return MailService(
-        mail_client=MailClient(settings=Settings())
-    )
+
+async def get_mail_service() -> MailService:
+    return MailService(mail_client=MailClient(settings=Settings()))
 
 
 async def consume_message():
@@ -28,16 +26,16 @@ async def consume_message():
     finally:
         await consumer.stop()
 
+
 # async def make_consumer(settings:Settings):
 #     mail_service = await get_mail_service()
 #     connection = await aio_pika.connect(url=settings.BROKER_URL)
-    
+
 #     async with connection:
 #         channel = await connection.channel()
-        
+
 #         name ='email_queue'
 #         queue = await channel.declare_queue(name=name, durable=True)
-        
-        
+
+
 #         await queue.consume(mail_service.consume_mail)
-        
