@@ -1,6 +1,6 @@
 
 import json
-from aiokafka import AIOKafkaConsumer
+from aiokafka import AIOKafkaConsumer, AIOKafkaProducer
 from config import Settings
 from service import MailService
 from client import MailClient
@@ -24,7 +24,7 @@ async def consume_message():
     try:
         async for mg in consumer:
             print(mg)
-            await mail_service.consume_mail(message=mg)
+            await mail_service.consume_mail(message=mg.value)
     finally:
         await consumer.stop()
 
